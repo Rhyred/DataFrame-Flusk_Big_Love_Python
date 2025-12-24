@@ -1,0 +1,10 @@
+# Ignore Database Binary
+
+
+# Ignore Python Cache (Wajib biar gak nyampah)
+__pycache__/
+*.pyc
+
+# Ignore Virtual Environment (Kalau ada)
+venv/
+env/
