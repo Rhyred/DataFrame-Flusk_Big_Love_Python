@@ -1,44 +1,44 @@
-    {% extends "layout.html" %}
+{% extends "layout.html" %}
 
 {% block title %}Analisis - Penderita DM Jawa Barat{% endblock %}
 
 {% block content %}
 <!-- Page Header -->
 <div class="mb-8">
-    <h1 class="text-3xl font-bold">Analisis Data</h1>
-    <p class="text-secondary">Analisis detail penderita diabetes melitus di Jawa Barat</p>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Analisis Data</h1>
+    <p class="text-gray-500 dark:text-gray-400 mt-1">Analisis detail penderita diabetes melitus di Jawa Barat.</p>
 </div>
 
 <!-- Grid for analysis cards -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="grid grid-cols-1 gap-6">
 
     <!-- Analisis 14: Total Penderita DM per Tahun -->
-    <div class="card lg:col-span-2">
-        <h3 class="chart-title">14. Total Penderita DM per Tahun</h3>
-        <p class="text-secondary mb-4">Total jumlah penderita diabetes melitus per tahun di seluruh Jawa Barat.</p>
-        <div class="table-wrapper">
-            <table>
-                <thead>
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">14. Total Penderita DM per Tahun</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Total jumlah penderita diabetes melitus per tahun di seluruh Jawa Barat.</p>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th>Tahun</th>
-                        <th>Jumlah Penderita</th>
-                        <th>Perubahan</th>
+                        <th scope="col" class="px-6 py-3">Tahun</th>
+                        <th scope="col" class="px-6 py-3 text-right">Jumlah Penderita</th>
+                        <th scope="col" class="px-6 py-3 text-center">Perubahan</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% set prev_value = 0 %}
                     {% for tahun, jumlah in total_per_tahun.items()|sort %}
-                    <tr>
-                        <td class="font-semibold">{{ tahun }}</td>
-                        <td>{{ "{:,}".format(jumlah|int) }}</td>
-                        <td>
+                    <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-6 py-4 font-semibold text-blue-600 dark:text-blue-400">{{ tahun }}</td>
+                        <td class="px-6 py-4 font-medium text-right">{{ "{:,}".format(jumlah|int) }}</td>
+                        <td class="px-6 py-4 text-center">
                             {% if prev_value > 0 %}
                                 {% set change = ((jumlah - prev_value) / prev_value * 100)|int %}
-                                <span class="font-semibold {% if change >= 0 %}text-danger{% else %}text-success{% endif %}">
+                                <span class="font-semibold {% if change >= 0 %}text-red-500 dark:text-red-400{% else %}text-green-500 dark:text-green-400{% endif %}">
                                     {% if change >= 0 %}↑{% else %}↓{% endif %} {{ abs(change) }}%
                                 </span>
                             {% else %}
-                                <span class="text-secondary">-</span>
+                                <span class="text-gray-400 dark:text-gray-500">-</span>
                             {% endif %}
                         </td>
                     </tr>
@@ -49,31 +49,45 @@
         </div>
     </div>
 
+    <!-- Analisis 16: Penderita Tertinggi & Terendah -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md">
+            <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Penderita Tertinggi (Total)</p>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-2">{{ tertinggi_kota }}</p>
+            <p class="text-4xl font-bold text-red-600 dark:text-red-400 mt-1">{{ "{:,}".format(tertinggi_nilai) }}</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md">
+            <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Penderita Terendah (Total)</p>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-2">{{ terendah_kota }}</p>
+            <p class="text-4xl font-bold text-green-600 dark:text-green-400 mt-1">{{ "{:,}".format(terendah_nilai) }}</p>
+        </div>
+    </div>
+
     <!-- Analisis 15: Rata-rata Penderita per Kabupaten/Kota -->
-    <div class="card lg:col-span-2">
-        <h3 class="chart-title">15. Rata-rata Penderita DM per Kabupaten/Kota</h3>
-        <p class="text-secondary mb-4">Rata-rata jumlah penderita untuk setiap kabupaten/kota, berdasarkan semua tahun data.</p>
-        <div class="table-wrapper">
-            <table>
-                <thead>
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">15. Rata-rata Penderita per Kabupaten/Kota</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Rata-rata jumlah penderita untuk setiap kabupaten/kota, berdasarkan semua tahun data.</p>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th>Kabupaten/Kota</th>
-                        <th>Rata-rata Penderita</th>
-                        <th>Kategori</th>
+                        <th scope="col" class="px-6 py-3">Kabupaten/Kota</th>
+                        <th scope="col" class="px-6 py-3 text-right">Rata-rata Penderita</th>
+                        <th scope="col" class="px-6 py-3 text-center">Kategori</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for kota, rata_rata in avg_per_kota.items() %}
-                    <tr>
-                        <td><a href="/detail/{{ kota }}" class="text-primary font-semibold hover:underline">{{ kota }}</a></td>
-                        <td>{{ "{:,.0f}".format(rata_rata) }}</td>
-                        <td>
+                    <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-6 py-4 font-medium"><a href="/detail/{{ kota }}" class="text-blue-600 dark:text-blue-400 hover:underline">{{ kota }}</a></td>
+                        <td class="px-6 py-4 font-medium text-right">{{ "{:,.0f}".format(rata_rata) }}</td>
+                        <td class="px-6 py-4 text-center">
                             {% if rata_rata >= 100000 %}
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">Tinggi</span>
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Tinggi</span>
                             {% elif rata_rata >= 50000 %}
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">Sedang</span>
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Sedang</span>
                             {% else %}
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Rendah</span>
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Rendah</span>
                             {% endif %}
                         </td>
                     </tr>
@@ -82,27 +96,10 @@
             </table>
         </div>
     </div>
-
-    <!-- Analisis 16a: Kabupaten/Kota Tertinggi -->
-    <div class="card text-center">
-        <h3 class="chart-title">16a. Penderita Tertinggi (Total)</h3>
-        <p class="text-lg font-bold text-success">{{ tertinggi_kota }}</p>
-        <p class="text-4xl font-extrabold text-success mb-1">{{ "{:,}".format(tertinggi_nilai) }}</p>
-        <p class="text-secondary">Total Penderita (Semua Tahun)</p>
-    </div>
-
-    <!-- Analisis 16b: Kabupaten/Kota Terendah -->
-    <div class="card text-center">
-        <h3 class="chart-title">16b. Penderita Terendah (Total)</h3>
-        <p class="text-lg font-bold text-warning">{{ terendah_kota }}</p>
-        <p class="text-4xl font-extrabold text-warning mb-1">{{ "{:,}".format(terendah_nilai) }}</p>
-        <p class="text-secondary">Total Penderita (Semua Tahun)</p>
-    </div>
-
 </div>
 
 <!-- Info Alert -->
-<div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-900 dark:border-blue-800">
+<div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg dark:bg-gray-800 dark:border-blue-700">
     <p class="text-sm text-blue-800 dark:text-blue-300">
         <strong>Catatan:</strong> Data analisis mencakup penderita diabetes melitus yang dilaporkan dari tahun {{ total_per_tahun.keys()|list|first|int }} hingga {{ total_per_tahun.keys()|list|last|int }}.
     </p>

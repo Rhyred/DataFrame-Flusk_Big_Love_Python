@@ -3,110 +3,73 @@
 {% block title %}Detail - {{ kota }}{% endblock %}
 
 {% block content %}
-<!-- Back Button -->
-<div class="mb-8">
-    <a href="/data" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
-        ← Kembali ke Data
+<!-- Page Header -->
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ kota }}</h1>
+        <p class="text-gray-500 dark:text-gray-400 mt-1">Detail penderita diabetes melitus per tahun.</p>
+    </div>
+    <a href="/data" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700">
+        ← Kembali
     </a>
 </div>
 
-<!-- Page Header -->
-<div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ kota }}</h1>
-    <p class="text-gray-500 dark:text-gray-400">Detail penderita diabetes melitus per tahun</p>
-</div>
-
 <!-- Stats Grid -->
-<div class="grid gap-4 mb-8 md:grid-cols-2 xl:grid-cols-4">
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex-shrink-0">
-                <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ "{:,}".format(total_kota) }}</span>
-                <h3 class="text-base font-light text-gray-500 dark:text-gray-400">Total Penderita</h3>
-            </div>
-            <div class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg dark:bg-blue-900">
-                <svg class="w-6 h-6 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM15.657 14.243a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM11 17a1 1 0 102 0v-1a1 1 0 10-2 0v1zM5.757 15.657a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zM5.757 4.343a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-1.414l-.707-.707z"></path></svg>
-            </div>
-        </div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">Semua Tahun</div>
+<div class="grid gap-6 mb-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
+        <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Penderita</p>
+        <p class="text-4xl font-bold text-gray-900 dark:text-white mt-2">{{ "{:,}".format(total_kota) }}</p>
     </div>
-
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex-shrink-0">
-                <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ "{:,.0f}".format(rata_rata) }}</span>
-                <h3 class="text-base font-light text-gray-500 dark:text-gray-400">Rata-rata</h3>
-            </div>
-            <div class="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg dark:bg-green-900">
-                <svg class="w-6 h-6 text-green-600 dark:text-green-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
-            </div>
-        </div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">Per Tahun</div>
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
+        <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Rata-rata</p>
+        <p class="text-4xl font-bold text-gray-900 dark:text-white mt-2">{{ "{:,.0f}".format(rata_rata) }}</p>
     </div>
-
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex-shrink-0">
-                <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ "{:,}".format(tertinggi) }}</span>
-                <h3 class="text-base font-light text-gray-500 dark:text-gray-400">Tertinggi</h3>
-            </div>
-            <div class="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-lg dark:bg-purple-900">
-                <svg class="w-6 h-6 text-purple-600 dark:text-purple-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM5 16a2 2 0 11-4 0 2 2 0 014 0z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
-            </div>
-        </div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">Puncak Data</div>
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
+        <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Tertinggi</p>
+        <p class="text-4xl font-bold text-red-600 dark:text-red-400 mt-2">{{ "{:,}".format(tertinggi) }}</p>
     </div>
-
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex-shrink-0">
-                <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ "{:,}".format(terendah) }}</span>
-                <h3 class="text-base font-light text-gray-500 dark:text-gray-400">Terendah</h3>
-            </div>
-            <div class="inline-flex items-center justify-center w-12 h-12 bg-red-100 rounded-lg dark:bg-red-900">
-                <svg class="w-6 h-6 text-red-600 dark:text-red-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 12H6a1 1 0 000 2h9.75l-2.5 3.33A1 1 0 0016 17H6a3 3 0 01-3-3V6z" clip-rule="evenodd"></path></svg>
-            </div>
-        </div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">Nilai Minimum</div>
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
+        <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Terendah</p>
+        <p class="text-4xl font-bold text-green-600 dark:text-green-400 mt-2">{{ "{:,}".format(terendah) }}</p>
     </div>
 </div>
 
 <!-- Data Table -->
-<div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-6">
+<div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md mb-6">
     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Riwayat Penderita per Tahun</h3>
     <div class="overflow-x-auto">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table class="w-full text-sm text-left">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">Tahun</th>
-                    <th scope="col" class="px-6 py-3">Jumlah Penderita</th>
-                    <th scope="col" class="px-6 py-3">Kategori</th>
-                    <th scope="col" class="px-6 py-3">Perubahan</th>
+                    <th scope="col" class="px-6 py-3 text-right">Jumlah Penderita</th>
+                    <th scope="col" class="px-6 py-3 text-center">Kategori</th>
+                    <th scope="col" class="px-6 py-3 text-center">Perubahan</th>
                 </tr>
             </thead>
             <tbody>
                 {% set prev_value = 0 %}
                 {% for row in kota_data %}
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ row['tahun'] }}</td>
-                    <td class="px-6 py-4">{{ "{:,}".format(row['jumlah_penderita_dm']|int) }}</td>
-                    <td class="px-6 py-4">
+                <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <td class="px-6 py-4 font-semibold text-blue-600 dark:text-blue-400">{{ row['tahun'] }}</td>
+                    <td class="px-6 py-4 font-medium text-right">{{ "{:,}".format(row['jumlah_penderita_dm']|int) }}</td>
+                    <td class="px-6 py-4 text-center">
                         {% if row['kategori_dm'] == 'Tinggi' %}
-                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">{{ row['kategori_dm'] }}</span>
+                            <span class="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">{{ row['kategori_dm'] }}</span>
                         {% elif row['kategori_dm'] == 'Sedang' %}
-                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">{{ row['kategori_dm'] }}</span>
+                            <span class="px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">{{ row['kategori_dm'] }}</span>
                         {% else %}
-                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">{{ row['kategori_dm'] }}</span>
+                            <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">{{ row['kategori_dm'] }}</span>
                         {% endif %}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 text-center">
                         {% if prev_value > 0 %}
                             {% set change = ((row['jumlah_penderita_dm'] - prev_value) / prev_value * 100)|int %}
-                            <span class="{% if change >= 0 %}text-red-600 dark:text-red-400{% else %}text-green-600 dark:text-green-400{% endif %} font-semibold">
+                            <span class="font-semibold {% if change >= 0 %}text-red-500 dark:text-red-400{% else %}text-green-500 dark:text-green-400{% endif %}">
                                 {% if change >= 0 %}↑{% else %}↓{% endif %} {{ abs(change) }}%
                             </span>
                         {% else %}
-                            <span class="text-gray-500 dark:text-gray-400">-</span>
+                            <span class="text-gray-400 dark:text-gray-500">-</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -118,12 +81,12 @@
 </div>
 
 <!-- Info -->
-<div class="p-4 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-900 dark:border-blue-800">
+<div class="p-4 bg-blue-50 border border-blue-200 rounded-lg dark:bg-gray-800 dark:border-blue-700">
     <p class="text-sm font-semibold text-blue-800 dark:text-blue-300 mb-2">Kategori Penderita:</p>
-    <ul class="text-sm text-blue-800 dark:text-blue-300 space-y-1">
-        <li><span class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">Tinggi</span> = 100.000 penderita atau lebih</li>
-        <li><span class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">Sedang</span> = 50.000 - 99.999 penderita</li>
-        <li><span class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Rendah</span> = Kurang dari 50.000 penderita</li>
+    <ul class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+        <li><span class="font-semibold text-red-800 dark:text-red-300">Tinggi</span>: 100.000 penderita atau lebih</li>
+        <li><span class="font-semibold text-yellow-800 dark:text-yellow-300">Sedang</span>: 50.000 - 99.999 penderita</li>
+        <li><font-semibold class="text-green-800 dark:text-green-300">Rendah</span>: Kurang dari 50.000 penderita</li>
     </ul>
 </div>
 {% endblock %}
