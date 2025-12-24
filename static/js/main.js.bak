@@ -1,0 +1,61 @@
+// Sidebar toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Get sidebar and toggle button
+    const sidebar = document.getElementById('logo-sidebar');
+    const toggleButton = document.querySelector('[data-drawer-toggle="logo-sidebar"]');
+    
+    if (toggleButton && sidebar) {
+        toggleButton.addEventListener('click', function() {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebar.classList.toggle('show');
+        });
+    }
+    
+    // Close sidebar when clicking on a link (mobile)
+    const sidebarLinks = sidebar?.querySelectorAll('a');
+    if (sidebarLinks) {
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Only close for navigation links, not for current page
+                if (window.innerWidth < 768) {
+                    // Add small delay to allow link navigation
+                    setTimeout(() => {
+                        sidebar.classList.add('-translate-x-full');
+                        sidebar.classList.remove('show');
+                    }, 100);
+                }
+            });
+        });
+    }
+    
+    // Set active link based on current URL
+    const currentPath = window.location.pathname;
+    const navLinks = sidebar?.querySelectorAll('a');
+    if (navLinks) {
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPath) {
+                link.classList.add('bg-blue-50', 'dark:bg-blue-900', 'text-blue-700', 'dark:text-blue-300');
+                link.classList.remove('text-gray-900', 'dark:text-white', 'hover:bg-gray-100', 'dark:hover:bg-gray-700');
+            } else {
+                link.classList.add('text-gray-900', 'dark:text-white', 'hover:bg-gray-100', 'dark:hover:bg-gray-700');
+                link.classList.remove('bg-blue-50', 'dark:bg-blue-900', 'text-blue-700', 'dark:text-blue-300');
+            }
+        });
+    }
+});
+
+// Dark mode toggle
+function toggleDarkMode() {
+    const htmlElement = document.documentElement;
+    htmlElement.classList.toggle('dark');
+    localStorage.setItem('darkMode', htmlElement.classList.contains('dark'));
+}
+
+// Check for saved dark mode preference
+document.addEventListener('DOMContentLoaded', function() {
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === 'true') {
+        document.documentElement.classList.add('dark');
+    }
+});

@@ -1,0 +1,17 @@
+# Lingkungan virtual
+.venv/
+venv/
+*.venv
+
+# File cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# File sistem operasi
+.DS_Store
+Thumbs.db
+
+# File dataset
+*.csv
