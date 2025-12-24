@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard Penderita Diabetes Mellitus - Jawa Barat">
+    <meta name="author" content="Dinas Kesehatan">
+    <title>{% block title %}Dashboard DM Jawa Barat{% endblock %}</title>
+    <!-- CSS Framework first, then custom styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flowbite.css') }}?v=1.3">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-pro.css') }}?v=1.3">
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 px-4 py-3 dark:bg-gray-800 dark:border-gray-700 fixed w-full top-0 z-50 shadow-md">
+        <div class="flex flex-wrap justify-between items-center">
+            <div class="flex justify-start items-center">
+                <button data-drawer-toggle="logo-sidebar" data-drawer-target="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 transition">
+                    <span class="sr-only">Open sidebar</span>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path></svg>
+                </button>
+                <a href="/" class="flex ml-2 md:mr-24">
+                    <span class="self-center text-2xl font-bold whitespace-nowrap dark:text-white bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">📊 DM Jawa Barat</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4 lg:order-2">
+                <button onclick="new DarkMode().toggle()" class="p-2 text-gray-500 rounded-lg hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 transition">
+                    <span class="sr-only">Toggle dark mode</span>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700 shadow-lg" aria-label="Sidebar">
+        <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+            <ul class="space-y-2 font-medium">
+                <li><a href="/" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white {% if request.path == '/' %}bg-blue-50 dark:bg-blue-900{% else %}hover:bg-gray-100 dark:hover:bg-gray-700{% endif %} transition"><svg class="w-6 h-6 text-blue-600 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path></svg><span class="ml-3">Dashboard</span></a></li>
+                <li><a href="/analisis" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white {% if request.path == '/analisis' %}bg-blue-50 dark:bg-blue-900{% else %}hover:bg-gray-100 dark:hover:bg-gray-700{% endif %} transition"><svg class="w-6 h-6 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path></svg><span class="ml-3">Analisis</span></a></li>
+                <li><a href="/data" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white {% if request.path == '/data' %}bg-blue-50 dark:bg-blue-900{% else %}hover:bg-gray-100 dark:hover:bg-gray-700{% endif %} transition"><svg class="w-6 h-6 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM15 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2h-2zM5 13a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM15 13a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2z"></path></svg><span class="ml-3">Data</span></a></li>
+                <li><a href="/manage" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white {% if request.path == '/manage' %}bg-blue-50 dark:bg-blue-900{% else %}hover:bg-gray-100 dark:hover:bg-gray-700{% endif %} transition"><svg class="w-6 h-6 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path></svg><span class="ml-3">Manage</span></a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 pt-20 min-h-screen">
+        <div class="px-4 md:px-8 py-8 max-w-7xl">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 px-4 md:px-8 py-8 dark:bg-gray-800 dark:border-gray-700 mt-12 md:ml-64">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid gap-8 mb-8 grid-cols-1 md:grid-cols-3">
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-3">Dashboard DM</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Platform monitoring dan analisis penderita diabetes mellitus di Jawa Barat</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-3">Fitur</h4>
+                    <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <li>📊 Dashboard Real-time</li>
+                        <li>📈 Analisis Mendalam</li>
+                        <li>📋 Data Management</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-3">Kontak</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Dinas Kesehatan Provinsi Jawa Barat</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 dark:border-gray-700 pt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+                <p>&copy; 2024 Dashboard Diabetes Mellitus Jawa Barat | Data dari Dinas Kesehatan</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Responsive Sidebar Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 hidden z-30 md:hidden" onclick="new Navigation().closeSidebar()"></div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

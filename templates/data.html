@@ -1,192 +1,119 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data - Penderita DM Jawa Barat</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/flowbite.css') }}">
-</head>
-<body class="bg-gray-50 dark:bg-gray-900">
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% extends "layout.html" %}
 
-    <!-- Navbar -->
-    <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed w-full top-0 z-50">
-        <div class="flex flex-wrap justify-between items-center">
-            <div class="flex justify-start items-center">
-                <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                    <span class="sr-only">Open sidebar</span>
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-                    </svg>
-                </button>
-                <a href="/" class="flex ml-2 md:mr-24">
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">📊 DM Dashboard</span>
-                </a>
-            </div>
+{% block title %}Data - Penderita DM Jawa Barat{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="mb-8">
+    <h1 class="text-3xl font-bold">Data Lengkap</h1>
+    <p class="text-secondary">Semua data penderita diabetes melitus dengan filter dan pencarian.</p>
+</div>
+
+<!-- Filter Section -->
+<div class="card mb-8">
+    <h3 class="chart-title">Filter Data</h3>
+    <form method="GET" action="/data" class="grid gap-4 md:grid-cols-3">
+        <div>
+            <label for="tahun" class="block text-sm font-medium text-secondary mb-2">Tahun</label>
+            <select id="tahun" name="tahun" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary">
+                <option value="">Semua Tahun</option>
+                {% for tahun in tahun_list %}
+                <option value="{{ tahun }}" {% if tahun_param == tahun %}selected{% endif %}>{{ tahun }}</option>
+                {% endfor %}
+            </select>
         </div>
-    </nav>
 
-    <!-- Sidebar -->
-    <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
-        <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-            <ul class="space-y-2 font-medium">
-                <li>
-                    <a href="/" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
-                        <span class="ml-3">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/analisis" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path></svg>
-                        <span class="ml-3">Analisis</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/data" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-blue-50 dark:bg-blue-900">
-                        <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM15 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2h-2zM5 13a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM15 13a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2z"></path></svg>
-                        <span class="ml-3">Data</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/manage" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path></svg>
-                        <span class="ml-3">Manage</span>
-                    </a>
-                </li>
-            </ul>
+        <div>
+            <label for="kota" class="block text-sm font-medium text-secondary mb-2">Kabupaten/Kota</label>
+            <select id="kota" name="kota" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary">
+                <option value="">Semua Kabupaten/Kota</option>
+                {% for kota in kota_list %}
+                <option value="{{ kota }}" {% if kota_param == kota %}selected{% endif %}>{{ kota }}</option>
+                {% endfor %}
+            </select>
         </div>
-    </aside>
 
-    <!-- Main Content -->
-    <main class="md:ml-64 pt-20">
-        <div class="px-4 pt-6 pb-6">
-            <!-- Page Header -->
-            <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Data Lengkap</h1>
-                <p class="text-gray-500 dark:text-gray-400">Semua data penderita diabetes melitus dengan filter dan pencarian</p>
-            </div>
+        <div>
+            <label for="kategori" class="block text-sm font-medium text-secondary mb-2">Kategori</label>
+            <select id="kategori" name="kategori" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary">
+                <option value="">Semua Kategori</option>
+                {% for kategori in kategori_list %}
+                <option value="{{ kategori }}" {% if kategori_param == kategori %}selected{% endif %}>{{ kategori }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-            <!-- Filter Section -->
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Filter Data</h3>
-                <form method="GET" action="/data" class="grid gap-4 md:grid-cols-3">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Tahun</label>
-                        <select name="tahun" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400">
-                            <option value="">Semua Tahun</option>
-                            {% for tahun in tahun_list %}
-                            <option value="{{ tahun }}" {% if tahun_param == tahun %}selected{% endif %}>{{ tahun }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+        <div class="md:col-span-3 flex gap-2">
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium">🔍 Filter</button>
+            <a href="/data" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600">↻ Reset</a>
+        </div>
+    </form>
+</div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Kabupaten/Kota</label>
-                        <select name="kota" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400">
-                            <option value="">Semua Kabupaten/Kota</option>
-                            {% for kota in kota_list %}
-                            <option value="{{ kota }}" {% if kota_param == kota %}selected{% endif %}>{{ kota }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Kategori</label>
-                        <select name="kategori" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400">
-                            <option value="">Semua Kategori</option>
-                            {% for kategori in kategori_list %}
-                            <option value="{{ kategori }}" {% if kategori_param == kategori %}selected{% endif %}>{{ kategori }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="md:col-span-3 flex gap-2">
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium">🔍 Filter</button>
-                        <a href="/data" class="px-4 py-2 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 text-sm font-medium dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">↻ Reset</a>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Data Summary -->
-            <div class="p-4 mb-6 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-900 dark:border-blue-800">
-                <p class="text-sm text-blue-800 dark:text-blue-300">
-                    Menampilkan <strong>{{ data|length }}</strong> dari <strong>{{ total_rows }}</strong> data
-                </p>
-            </div>
-
-            <!-- Data Table -->
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Data Penderita Diabetes Melitus</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">Tahun</th>
-                                <th scope="col" class="px-6 py-3">Kabupaten/Kota</th>
-                                <th scope="col" class="px-6 py-3">Jumlah Penderita</th>
-                                <th scope="col" class="px-6 py-3">Kategori</th>
-                                <th scope="col" class="px-6 py-3">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in data %}
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ row['tahun'] }}</td>
-                                <td class="px-6 py-4">{{ row['nama_kabupaten_kota'] }}</td>
-                                <td class="px-6 py-4">{{ "{:,}".format(row['jumlah_penderita_dm']|int) }}</td>
-                                <td class="px-6 py-4">
-                                    {% if row['kategori_dm'] == 'Tinggi' %}
-                                        <span class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">{{ row['kategori_dm'] }}</span>
-                                    {% elif row['kategori_dm'] == 'Sedang' %}
-                                        <span class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">{{ row['kategori_dm'] }}</span>
-                                    {% else %}
-                                        <span class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">{{ row['kategori_dm'] }}</span>
-                                    {% endif %}
-                                </td>
-                                <td class="px-6 py-4">
-                                    <a href="/detail/{{ row['nama_kabupaten_kota'] }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700 font-medium">Detail</a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Pagination -->
-                {% if total_pages > 1 %}
-                <div class="flex justify-center gap-2 mt-6 flex-wrap">
-                    {% if page > 1 %}
-                        <a href="/data?page=1{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 text-gray-900 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">« Awal</a>
-                        <a href="/data?page={{ page-1 }}{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 text-gray-900 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">‹ Sebelumnya</a>
-                    {% endif %}
-
-                    {% for p in range([1, page-2]|max, [total_pages+1, page+3]|min) %}
-                        {% if p == page %}
-                            <span class="px-3 py-2 text-sm bg-blue-600 text-white rounded font-semibold">{{ p }}</span>
+<!-- Data Table -->
+<div class="card">
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="chart-title mb-0">Data Penderita</h3>
+        <p class="text-sm text-secondary">
+            Menampilkan <strong>{{ data|length }}</strong> dari <strong>{{ total_rows }}</strong> data
+        </p>
+    </div>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Tahun</th>
+                    <th>Kabupaten/Kota</th>
+                    <th>Jumlah Penderita</th>
+                    <th>Kategori</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td class="font-semibold">{{ row['tahun'] }}</td>
+                    <td>{{ row['nama_kabupaten_kota'] }}</td>
+                    <td>{{ "{:,}".format(row['jumlah_penderita_dm']|int) }}</td>
+                    <td>
+                        {% if row['kategori_dm'] == 'Tinggi' %}
+                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">{{ row['kategori_dm'] }}</span>
+                        {% elif row['kategori_dm'] == 'Sedang' %}
+                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">{{ row['kategori_dm'] }}</span>
                         {% else %}
-                            <a href="/data?page={{ p }}{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 text-gray-900 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">{{ p }}</a>
+                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">{{ row['kategori_dm'] }}</span>
                         {% endif %}
-                    {% endfor %}
+                    </td>
+                    <td>
+                        <a href="/detail/{{ row['nama_kabupaten_kota'] }}" class="text-primary hover:underline font-medium">Detail</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-                    {% if page < total_pages %}
-                        <a href="/data?page={{ page+1 }}{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 text-gray-900 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">Selanjutnya ›</a>
-                        <a href="/data?page={{ total_pages }}{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 text-gray-900 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">Akhir »</a>
-                    {% endif %}
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </main>
+    <!-- Pagination -->
+    {% if total_pages > 1 %}
+    <div class="flex justify-center gap-2 mt-6 flex-wrap">
+        {% if page > 1 %}
+            <a href="/data?page=1{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">« Awal</a>
+            <a href="/data?page={{ page-1 }}{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">‹ Sebelumnya</a>
+        {% endif %}
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 px-4 py-6 dark:bg-gray-800 dark:border-gray-700">
-        <div class="md:ml-64">
-            <div class="text-center text-sm text-gray-500 dark:text-gray-400">
-                <p>&copy; 2024 Dashboard Penderita Diabetes Mellitus Jawa Barat | Data dari Dinas Kesehatan</p>
-            </div>
-        </div>
-    </footer>
+        {% for p in range([1, page-2]|max, [total_pages+1, page+3]|min) %}
+            {% if p == page %}
+                <span class="px-3 py-2 text-sm bg-blue-600 text-white rounded font-semibold">{{ p }}</span>
+            {% else %}
+                <a href="/data?page={{ p }}{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
 
-</body>
-</html>
+        {% if page < total_pages %}
+            <a href="/data?page={{ page+1 }}{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">Selanjutnya ›</a>
+            <a href="/data?page={{ total_pages }}{% if tahun_param %}&tahun={{ tahun_param }}{% endif %}{% if kota_param %}&kota={{ kota_param }}{% endif %}{% if kategori_param %}&kategori={{ kategori_param }}{% endif %}" class="px-3 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">Akhir »</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
