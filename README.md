@@ -9,14 +9,14 @@ Aplikasi web interaktif untuk visualisasi, analisis, dan manajemen data penderit
 
 ## ✨ Fitur Utama
 
-✅ **Dashboard Interaktif** - Statistik ringkas dan 3 chart visualisasi  
-✅ **Analisis Mendalam** - 4 perspektif analisis dengan kategori color-coded  
-✅ **Data Management** - CRUD lengkap (Create, Read, Update, Delete)  
-✅ **Filtering & Pagination** - Filter by tahun/kota/kategori, 15 item per page  
-✅ **Responsive Design** - Mobile, tablet, desktop compatible  
-✅ **Professional Styling** - Flowbite-inspired UI dengan animations  
-✅ **Real-time Updates** - Auto-refresh setelah CRUD operations  
-✅ **Data Persistence** - CSV-based storage dengan auto-save  
+✅ **Dashboard Interaktif** - Statistik ringkas dan 3 chart visualisasi
+✅ **Analisis Mendalam** - 4 perspektif analisis dengan kategori color-coded
+✅ **Data Management** - CRUD lengkap (Create, Read, Update, Delete)
+✅ **Filtering & Pagination** - Filter by tahun/kota/kategori, 15 item per page
+✅ **Responsive Design** - Mobile, tablet, desktop compatible
+✅ **Professional Styling** - Flowbite-inspired UI dengan animations
+✅ **Real-time Updates** - Auto-refresh setelah CRUD operations
+✅ **Data Persistence** - CSV-based storage dengan auto-save
 
 ## Struktur Folder
 
@@ -39,29 +39,34 @@ diabetes-dashboard-flask/
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Python 3.7+
 - pip & virtualenv
 
 ### Installation
 
 1. **Setup Virtual Environment**
+
 ```bash
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1  # Windows PowerShell
 ```
 
 2. **Install Dependencies**
+
 ```bash
 cd diabetes-dashboard-flask
 pip install -r requirements.txt
 ```
 
 3. **Run Application**
+
 ```bash
 python app.py
 ```
 
 4. **Open in Browser**
+
 ```
 http://localhost:5000
 ```
@@ -89,29 +94,34 @@ diabetes-dashboard-flask/
 ## 🎯 Main Pages
 
 ### 1. Dashboard (/)
+
 - Statistik: Total penderita, jumlah area, periode data, YoY change
 - Charts: Trend, Top 10, Category distribution
 - Data preview table
 
 ### 2. Analysis (/analisis)
+
 - Analysis 14: Total per year with % change
 - Analysis 15: Average per city (Top 15)
 - Analysis 16: Highest vs Lowest comparison
 - Color-coded category badges
 
 ### 3. Data (/data)
+
 - Full data table with 15 rows/page
 - Filters: Tahun, Kota, Kategori
 - Pagination controls
 - Link to city details
 
-### 4. City Details (/detail/<city>)
+### 4. City Details (/detail/`<city>`)
+
 - Per-city statistics
 - Year-by-year history table
 - Percentage change indicators
 - Category information
 
 ### 5. Manage (CRUD)
+
 - **ADD**: Form to create new records
 - **READ**: Table view of all data
 - **EDIT**: Modal dialog for updates
@@ -120,6 +130,7 @@ diabetes-dashboard-flask/
 ## 🔧 API Endpoints
 
 ### GET Endpoints
+
 ```
 GET /              → Dashboard
 GET /analisis      → Analysis
@@ -130,6 +141,7 @@ GET /api/data      → JSON data export
 ```
 
 ### POST Endpoints
+
 ```
 POST /api/add           → Create record
 POST /api/edit/<id>     → Update record
@@ -139,24 +151,28 @@ POST /api/delete/<id>   → Delete record
 ## 🎨 Features
 
 ### CRUD Operations
+
 - **Create**: Add new data with auto-category calculation
 - **Read**: View all data in interactive table
 - **Update**: Edit records with modal dialog
 - **Delete**: Remove data with confirmation
 
 ### Data Management
+
 - Form validation (tahun, kota, jumlah)
 - Auto-kategori determination (Tinggi/Sedang/Rendah)
 - CSV-based persistence
 - Real-time table refresh
 
 ### Filtering & Search
+
 - Filter by Year (2019-2024)
 - Filter by City (27 Jawa Barat cities)
 - Filter by Category (Tinggi/Sedang/Rendah)
 - Multi-filter combinations
 
 ### Visualization
+
 - Line chart: 6-year trend
 - Bar chart: Top 10 cities
 - Pie chart: Category distribution
@@ -166,11 +182,11 @@ POST /api/delete/<id>   → Delete record
 
 Categories auto-determined by patient count:
 
-| Category | Range | Badge |
-|----------|-------|-------|
-| Tinggi | ≥ 100,000 | 🔴 Red |
-| Sedang | 50,000-99,999 | 🟡 Amber |
-| Rendah | < 50,000 | 🟢 Green |
+| Category | Range         | Badge    |
+| -------- | ------------- | -------- |
+| Tinggi   | ≥ 100,000    | 🔴 Red   |
+| Sedang   | 50,000-99,999 | 🟡 Amber |
+| Rendah   | < 50,000      | 🟢 Green |
 
 ## 🎨 Design & Styling
 
@@ -197,11 +213,13 @@ Categories auto-determined by patient count:
 ## 🔒 Validation
 
 ### Client-Side
+
 - Required field validation
 - Input type checking
 - Dropdown enforcement
 
 ### Server-Side
+
 - ID bounds checking
 - Exception handling
 - Error responses
@@ -215,23 +233,24 @@ Categories auto-determined by patient count:
 
 ## 🛠️ Technologies
 
-| Layer | Technology |
-|-------|-----------|
-| Backend | Flask 2.3+ |
-| Frontend | HTML5, CSS3, JavaScript |
-| Data Processing | Pandas 2.0.3 |
-| Visualization | Matplotlib 3.10+ |
-| Runtime | Python 3.13.7 |
+| Layer           | Technology              |
+| --------------- | ----------------------- |
+| Backend         | Flask 2.3+              |
+| Frontend        | HTML5, CSS3, JavaScript |
+| Data Processing | Pandas 2.0.3            |
+| Visualization   | Matplotlib 3.10+        |
+| Runtime         | Python 3.13.7           |
 
 ## 📚 Documentation
 
 - **FEATURES.md** - Complete feature list
-- **USAGE_GUIDE.md** - Step-by-step instructions  
+- **USAGE_GUIDE.md** - Step-by-step instructions
 - **TESTING.md** - QA report & verification
 
 ## 🐛 Troubleshooting
 
 ### Flask Won't Start
+
 ```bash
 # Port in use? Kill process
 taskkill /PID <PID> /F
@@ -241,6 +260,7 @@ app.run(port=5001)
 ```
 
 ### Virtual Environment Issues
+
 ```bash
 # Recreate venv
 rmdir .venv /s /q
@@ -250,6 +270,7 @@ pip install -r requirements.txt
 ```
 
 ### CSV Not Found
+
 - Check file path in app.py
 - Verify file exists in parent folder
 - Use absolute path if relative path fails
@@ -257,11 +278,13 @@ pip install -r requirements.txt
 ## 🔄 Development
 
 ### Auto-reload Enabled
+
 - Flask debug mode active
 - Changes auto-detected
 - Just refresh browser after code changes
 
 ### Add New Feature
+
 1. Create route in app.py
 2. Create template in templates/
 3. Add CSS to static/css/style.css
@@ -270,6 +293,7 @@ pip install -r requirements.txt
 ## 🚀 Production Deployment
 
 For production use:
+
 - Disable debug mode
 - Use production WSGI server (Gunicorn)
 - Enable HTTPS/SSL
@@ -295,6 +319,7 @@ gunicorn app:app --workers 4
 ## ✅ Testing Status
 
 All features tested and verified:
+
 - ✅ Dashboard loads correctly
 - ✅ Charts render properly
 - ✅ Filters work as expected
@@ -307,6 +332,7 @@ All features tested and verified:
 ## 📞 Support
 
 For issues:
+
 1. Check console (F12)
 2. Review Flask terminal logs
 3. Verify data file exists
@@ -316,13 +342,14 @@ For issues:
 ## 🎓 Learning Resources
 
 See documentation files for:
+
 - Complete feature breakdown (FEATURES.md)
 - Step-by-step usage guide (USAGE_GUIDE.md)
 - Testing & verification (TESTING.md)
 
 ---
 
-**Version**: 2.0.1 | **Status**: ✅ Production Ready  
+**Version**: 2.0.1 | **Status**: ✅ Production Ready
 **Last Updated**: 2024 | **Maintained By**: Development Team
 
 📊 Dashboard Penderita Diabetes Mellitus Jawa Barat | 2019-2024 Data
@@ -331,4 +358,4 @@ Dashboard ini dibuat sebagai bagian dari analisis data Diabetes Melitus Jawa Bar
 
 ---
 
-**Dibuat dengan ❤️ menggunakan Flask**
+**Make using ❤️ Flask**
