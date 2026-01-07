@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dashboard Penderita Diabetes Mellitus - Jawa Barat">
-    <meta name="author" content="Dinas Kesehatan">
     <title>{% block title %}Dashboard DM Jawa Barat{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script>
-        // Set theme on page load
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
@@ -16,59 +15,83 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans antialiased">
 
-    <!-- Navbar -->
-    <nav class="bg-white border-b border-gray-200 px-4 py-3 dark:bg-gray-800 dark:border-gray-700 fixed w-full top-0 z-50 shadow-sm">
-        <div class="flex flex-wrap justify-between items-center">
-            <div class="flex justify-start items-center">
-                <button data-drawer-toggle="logo-sidebar" data-drawer-target="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 transition">
-                    <span class="sr-only">Open sidebar</span>
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path></svg>
-                </button>
-                <a href="/" class="flex ml-2 md:mr-24">
-                    <span class="self-center text-2xl font-bold whitespace-nowrap bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">📊 DM Jawa Barat</span>
-                </a>
-            </div>
-            <div class="flex items-center gap-4 lg:order-2">
-                <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
-                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-                </button>
+    <!-- Header & Navigation -->
+    <header class="bg-white/70 backdrop-blur-lg border-b border-gray-200 dark:bg-gray-800/70 dark:border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Left Side: Logo & Nav -->
+                <div class="flex items-center space-x-6">
+                    <a href="/" class="flex-shrink-0">
+                        <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">DM Jabar</span>
+                    </a>
+                    <div class="hidden md:flex md:items-center md:space-x-1">
+                        <a href="/" class="nav-link-header text-base font-medium px-3 py-2 {% if request.path == '/' %}active{% endif %}">Dashboard</a>
+                        <a href="/analisis" class="nav-link-header text-base font-medium px-3 py-2 {% if request.path == '/analisis' %}active{% endif %}">Analisis</a>
+                        <a href="/data" class="nav-link-header text-base font-medium px-3 py-2 {% if request.path == '/data' %}active{% endif %}">Data</a>
+                        <a href="/manage" class="nav-link-header text-base font-medium px-3 py-2 {% if request.path == '/manage' %}active{% endif %}">Manage</a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Search, Theme Toggle, Mobile Menu -->
+                <div class="flex items-center">
+                    <!-- Search Form -->
+                    <div class="hidden md:block">
+                        <form action="{{ url_for('data') }}" method="get" class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none"><path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                            </span>
+                            <input type="search" name="kota" placeholder="Cari Kota..." class="block w-full py-2 pl-10 pr-3 text-sm text-gray-700 bg-gray-100 border border-transparent rounded-md dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition">
+                        </form>
+                    </div>
+
+                    <button id="theme-toggle" type="button" class="ml-4 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
+
+                    <div class="md:hidden ml-2">
+                         <button data-drawer-toggle="mobile-menu" data-drawer-target="mobile-menu" aria-controls="mobile-menu" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                            <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
 
-    <!-- Sidebar -->
-    <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
-        <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-            <ul class="space-y-2 font-medium">
-                <li><a href="/" class="flex items-center p-2 rounded-lg {% if request.path == '/' %}bg-blue-50 text-blue-700 dark:bg-gray-700 dark:text-white{% else %}text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700{% endif %} transition group"><svg class="w-6 h-6 {% if request.path == '/' %}text-blue-700 dark:text-white{% else %}text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white{% endif %}" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path></svg><span class="ml-3">Dashboard</span></a></li>
-                <li><a href="/analisis" class="flex items-center p-2 rounded-lg {% if request.path == '/analisis' %}bg-blue-50 text-blue-700 dark:bg-gray-700 dark:text-white{% else %}text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700{% endif %} transition group"><svg class="w-6 h-6 {% if request.path == '/analisis' %}text-blue-700 dark:text-white{% else %}text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white{% endif %}" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path></svg><span class="ml-3">Analisis</span></a></li>
-                <li><a href="/data" class="flex items-center p-2 rounded-lg {% if request.path == '/data' %}bg-blue-50 text-blue-700 dark:bg-gray-700 dark:text-white{% else %}text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700{% endif %} transition group"><svg class="w-6 h-6 {% if request.path == '/data' %}text-blue-700 dark:text-white{% else %}text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white{% endif %}" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM15 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2h-2zM5 13a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM15 13a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2z"></path></svg><span class="ml-3">Data</span></a></li>
-                <li><a href="/manage" class="flex items-center p-2 rounded-lg {% if request.path == '/manage' %}bg-blue-50 text-blue-700 dark:bg-gray-700 dark:text-white{% else %}text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700{% endif %} transition group"><svg class="w-6 h-6 {% if request.path == '/manage' %}text-blue-700 dark:text-white{% else %}text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white{% endif %}" fill="currentColor" viewBox="0 0 20 20"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path></svg><span class="ml-3">Manage</span></a></li>
-            </ul>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full bg-white dark:bg-gray-800">
+            <div class="p-4">
+                <form action="{{ url_for('data') }}" method="get" class="relative mb-4">
+                    <input type="search" name="kota" placeholder="Cari Kota..." class="block w-full py-2 pl-4 pr-3 text-sm text-gray-700 bg-gray-100 border rounded-md dark:bg-gray-700 dark:text-gray-300 focus:outline-none">
+                </form>
+                <a href="/" class="nav-link-mobile {% if request.path == '/' %}active{% endif %}">Dashboard</a>
+                <a href="/analisis" class="nav-link-mobile {% if request.path == '/analisis' %}active{% endif %}">Analisis</a>
+                <a href="/data" class="nav-link-mobile {% if request.path == '/data' %}active{% endif %}">Data</a>
+                <a href="/manage" class="nav-link-mobile {% if request.path == '/manage' %}active{% endif %}">Manage</a>
+            </div>
         </div>
-    </aside>
+    </header>
 
     <!-- Main Content -->
-    <main class="md:ml-64 pt-24 pb-8 min-h-screen">
-        <div class="px-4 md:px-8 max-w-7xl mx-auto">
+    <main class="pb-8 pt-8">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
             {% block content %}{% endblock %}
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 px-4 md:px-8 py-8 dark:bg-gray-800 dark:border-gray-700 md:ml-64">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center text-sm text-gray-600 dark:text-gray-400">
-                <p>&copy; 2024 Dashboard Diabetes Mellitus Jawa Barat | Data dari Dinas Kesehatan</p>
-            </div>
+    <footer class="bg-white border-t border-gray-200 px-4 md:px-8 py-4 dark:bg-gray-800 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto text-center text-sm text-gray-600 dark:text-gray-400">
+            <p>&copy; 2024 Dashboard Diabetes Mellitus Jawa Barat | Data dari Dinas Kesehatan</p>
         </div>
     </footer>
 
-    <!-- Flowbite JS for drawer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>

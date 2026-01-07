@@ -4,14 +4,14 @@
 
 {% block content %}
 <!-- Header -->
-<div class="mb-8">
+<div class="mb-8" data-aos="fade-up">
     <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
     <p class="text-gray-500 dark:text-gray-400 mt-1">Monitoring & analisis real-time penderita diabetes di Jawa Barat.</p>
 </div>
 
 <!-- Stats Grid -->
 <div class="grid gap-6 mb-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm" data-aos="fade-up" data-aos-delay="100">
         <div class="flex items-start justify-between">
             <div class="flex-1">
                 <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Penderita</p>
@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm" data-aos="fade-up" data-aos-delay="200">
         <div class="flex items-start justify-between">
             <div class="flex-1">
                 <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Kabupaten/Kota</p>
@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm" data-aos="fade-up" data-aos-delay="300">
         <div class="flex items-start justify-between">
             <div class="flex-1">
                 <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total {{ tahun_terbaru }}</p>
@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm" data-aos="fade-up" data-aos-delay="400">
         <div class="flex items-start justify-between">
             <div class="flex-1">
                 <p class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">Rata-rata per Kota</p>
@@ -61,23 +61,23 @@
 </div>
 
 <!-- Charts Section -->
-<div class="grid gap-6 mb-8 grid-cols-1 lg:grid-cols-2">
-    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md">
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
+    <div class="lg:col-span-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md" data-aos="fade-up" data-aos-delay="500">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">📈 Tren Tahunan</h3>
-        <div class="h-80 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center p-4">
-            <img src="{{ url_for('static', filename='images/trend_tahunan.png') }}" alt="Trend Chart" class="max-w-full h-auto">
+        <div class="h-96 flex items-center justify-center">
+            <img id="trend-chart" src="" alt="Trend Chart" class="max-w-full h-auto">
         </div>
     </div>
-    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">🎯 Kategori DM 2019</h3>
-        <div class="h-80 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center p-4">
-            <img src="{{ url_for('static', filename='images/kategori_2019.png') }}" alt="Category Chart" class="max-w-full h-auto">
+    <div class="lg:col-span-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md" data-aos="fade-up" data-aos-delay="600">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">🎯 Proporsi Kategori 2019</h3>
+        <div class="h-96 flex items-center justify-center">
+            <img id="kategori-chart" src="" alt="Kategori Chart" class="max-w-full h-auto">
         </div>
     </div>
 </div>
 
 <!-- Data Table -->
-<div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md">
+<div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md" data-aos="fade-up" data-aos-delay="700">
     <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📋 Data Terbaru</h3>
         <a href="/data" class="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400">Lihat Semua →</a>
@@ -94,9 +94,9 @@
                 </tr>
             </thead>
             <tbody>
-                {% for idx, row in top_data.iterrows() %}
+                {% for row in top_data.to_dict('records') %}
                 <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                    <td class="px-6 py-4 font-medium text-gray-500 dark:text-gray-400">{{ idx + 1 }}</td>
+                    <td class="px-6 py-4 font-medium text-gray-500 dark:text-gray-400">{{ loop.index }}</td>
                     <td class="px-6 py-4 font-semibold text-blue-600 dark:text-blue-400">{{ row['tahun'] }}</td>
                     <td class="px-6 py-4 font-medium">{{ row['nama_kabupaten_kota'] }}</td>
                     <td class="px-6 py-4 font-semibold text-right">{{ "{:,}".format(row['jumlah_penderita_dm']) }}</td>
@@ -115,4 +115,29 @@
         </table>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function updateCharts() {
+        const isDarkMode = localStorage.getItem('color-theme') === 'dark' || 
+                           (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        const theme = isDarkMode ? 'dark' : 'light';
+        
+        const timestamp = new Date().getTime(); // Cache buster
+        document.getElementById('trend-chart').src = `/charts/trend_tahunan?theme=${theme}&t=${timestamp}`;
+        document.getElementById('kategori-chart').src = `/charts/kategori_2019?theme=${theme}&t=${timestamp}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCharts();
+    });
+
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            setTimeout(updateCharts, 100);
+        });
+    }
+</script>
 {% endblock %}
